@@ -39,15 +39,15 @@ const Dashboard = () => {
   const expensesByCategory = transactions
     .filter((t) => t.type === "expense")
     .reduce((acc, t) => {
-      acc[t.category] = (acc[t.category] || 0) + t.amount;
+      acc[t.category] = (acc[t.category] || 0) + t.amount; {/*acc = running object of categorized totals t = current transaction being processed Returns a single object: { Food: 50, Transport: 30 }*/}
       return acc;
-    }, {});
+    }, {}); 
 
   const chartData = {
-    labels: Object.keys(expensesByCategory),
+    labels: Object.keys(expensesByCategory), //[Food,Travelling]
     datasets: [
       {
-        data: Object.values(expensesByCategory),
+        data: Object.values(expensesByCategory),//[rs 3000, rs 5000]
         backgroundColor: [
           "#f87171",
           "#fb923c",
@@ -61,8 +61,8 @@ const Dashboard = () => {
     ],
   };
 
-  const recentTransactions = [...transactions] // creates a copy of the transaction array with ... spread
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
+  const recentTransactions = [...transactions] //... copy of the transaction array, sort from recent
+    .sort((a, b) => new Date(b.date) - new Date(a.date)) 
     .slice(0, 5);
 
   if (loading)
@@ -87,19 +87,20 @@ const Dashboard = () => {
       <div className="flex items-start justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400">
-            Tuesday, September 8, 2026
+            {new Date().toLocaleDateString("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </p>
           <h1 className="mt-1 text-3xl font-semibold text-slate-900 dark:text-white">
-            Good morning, Alex.
+            Good morning, User.
           </h1>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Here's your financial snapshot for this month.
           </p>
         </div>
-        <span className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          Updated just now
-        </span>
       </div>
 
       {/* Summary Cards */}
@@ -148,8 +149,11 @@ const Dashboard = () => {
 
       {/* Chart + Recent Transactions */}
       <div className="mt-5 grid grid-cols-5 gap-5">
-        {/* Pie Chart */}
+
+        {/* Chart */}
         <div className="col-span-3 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950">
+          
+          {/*spendin overview text */}
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-semibold text-slate-900 dark:text-white">
@@ -158,79 +162,48 @@ const Dashboard = () => {
               <p className="text-sm text-slate-400">Where your money went</p>
             </div>
           </div>
-          {/* Chart */}
-          {Object.keys(expensesByCategory).length > 0 ? (
+
+          {/*Doghnut Chart + Category List*/}
+          {Object.keys(expensesByCategory).length > 0 ? ( //check for categories [food,travel] > 0 
             <div className="mt-4 flex items-center gap-8">
-              <div
-                style={{ width: "220px", minWidth: "220px" }}
-                className="relative flex items-center justify-center"
-              >
-                <Doughnut
-                  data={chartData}
-                  options={{
-                    cutout: "80%", // Sets thickness
-                    plugins: {
-                      legend: {
-                        display: false, // Hides the legend boxes entirely
-                      },
-                    },
-                  }}
-                />
+
+              {/*Doghnut*/}
+              <div style={{ width: "220px", minWidth: "220px" }} className="relative flex items-center justify-center">
+                <Doughnut data={chartData} options={{cutout: "80%", // Sets thickness
+                          plugins: {legend: {display: false, // Hides the legend boxes entirely
+                          },},}}/>
+
                 {/* Inside Doghnut */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                   <span className="text-2xl font-bold text-stone-800 dark:text-white">
-                    Rs.
-                    {(summary.totalExpenses / 1000).toLocaleString(undefined, {
-                      minimumFractionDigits: 1,
-                      maximumFractionDigits: 1,
-                    })}{" "}
-                    K
+                    Rs.{(summary.totalExpenses / 1000).toLocaleString(undefined, {minimumFractionDigits: 1,maximumFractionDigits: 1,})}{" "}K
                   </span>
                   <span className="text-xs text-slate-400">Total spent</span>
                 </div>
               </div>
 
               {/* Category list */}
-              <ul className="flex-1 space-y-3">
-                {chartData.labels.map((label, index) => {
-                  const percentage =
-                    summary.totalExpenses > 0
-                      ? (
-                          (chartData.datasets[0].data[index] /
-                            summary.totalExpenses) *
-                          100
-                        ).toFixed(1)
-                      : 0;
+              <ul className="flex-1 space-y-3"> 
+                {chartData.labels.map((label, index) => {const percentage = summary.totalExpenses > 0 ? //index-[food,transport] grabs directly from chart data
+                ((chartData.datasets[0].data[index] / summary.totalExpenses) * 100).toFixed(1) : 0; //stops dividing from zero and tofixed() round the numbers
                   return (
-                    <li
-                      key={label}
-                      className="flex items-center justify-between text-sm"
-                    >
-                      <span className="flex items-center gap-2">
-                        <span
-                          className="inline-block h-2.5 w-2.5 rounded-full"
-                          style={{
-                            backgroundColor:
-                              chartData.datasets[0].backgroundColor[
-                                index %
-                                  chartData.datasets[0].backgroundColor.length
-                              ],
-                          }}
-                        />
+                  <li key={label} className="flex items-center justify-between gap-10 text-sm">
+                    <span className="flex items-center gap-2">
+                      <span className="inline-block h-2.5 w-2.5 rounded-full" 
+                      style={{backgroundColor:chartData.datasets[0].backgroundColor[index % chartData.datasets[0].backgroundColor.length],}}/>
                         <span className="text-slate-700 dark:text-slate-300">
                           {label}
                         </span>
                       </span>
+
                       <span className="font-medium text-slate-500 dark:text-slate-400">
                         {percentage}%
                       </span>
-                    </li>
-                  );
-                })}
-              </ul>
+                    </li>);})}
+               </ul>
             </div>
-          ) : (
-            <div className="flex items-center justify-center h-40">
+          ) : ( // category.length < 0
+            <div className="flex items-center justify-center h-40">   
               <p className="text-stone-300 text-sm">No expense data yet</p>
             </div>
           )}
@@ -253,31 +226,41 @@ const Dashboard = () => {
               </Link>
             </button>
           </div>
-          
+
           {recentTransactions.length > 0 ? (
-            <div className="space-y-3">
+            <ul className="mt-5 space-y-4">
               {recentTransactions.map((t) => (
-                <div
-                  key={t._id}
-                  className="flex items-center justify-between py-2 border-b border-stone-300 last:border-0"
-                >
-                  <div>
-                    <p className="text-sm font-medium text-stone-700 dark:text-slate-300">
-                      {t.category}
-                    </p>
-                    <p className="text-xs text-stone-400">
-                      {new Date(t.date).toLocaleDateString("en-GB")}
-                    </p>
+                <li key={t._id} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`flex h-9 w-9 items-center justify-center rounded-lg text-xs font-semibold ${
+                        t.type === "income"
+                          ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
+                          : "bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400"
+                      }`}
+                    >
+                      {t.description?.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase()}
+                    </span>
+                    <div>
+                      <p className="text-sm font-medium text-slate-900 dark:text-white">
+                        {t.description}
+                      </p>
+                      <p className="text-xs text-slate-400">
+                        {t.category} ·{" "}
+                        {new Date(t.date).toLocaleDateString("en-GB")}
+                      </p>
+                    </div>
                   </div>
-                  <p
-                    className={`text-sm font-semibold ${t.type === "income" ? "text-emerald-500" : "text-rose-500"}`}
+
+                  <span
+                    className={`text-sm font-semibold ${t.type === "income" ? "text-emerald-600 dark:text-emerald-400" : "text-rose-500"}`}
                   >
                     {t.type === "income" ? "+" : "-"} Rs.{" "}
                     {t.amount.toLocaleString()}
-                  </p>
-                </div>
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
           ) : (
             <div className="flex items-center justify-center h-40">
               <p className="text-stone-300 text-sm">No transactions yet</p>
