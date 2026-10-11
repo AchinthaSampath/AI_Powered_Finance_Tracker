@@ -6,19 +6,19 @@ const API = axios.create({
 
 // Get all transactions
 export const getTransactions = async () => {
-  const response = await API.get("/transaction");
+  const response = await API.get("/transactions");
   return response.data;
 };
 
 // Add transaction
 export const addTransaction = async (data) => {
-  const response = await API.post("/transaction", data);
+  const response = await API.post("/transactions", data);
   return response.data;
 };
 
 // Delete transaction
 export const deleteTransaction = async (id) => {
-  const response = await API.delete(`/transaction/${id}`);
+  const response = await API.delete(`/transactions/${id}`);
   return response.data;
 };
 

@@ -184,13 +184,15 @@ const Dashboard = () => {
 
               {/* Category list */}
               <ul className="flex-1 space-y-3"> 
-                {chartData.labels.map((label, index) => {const percentage = summary.totalExpenses > 0 ? //index-[food,transport] grabs directly from chart data
-                ((chartData.datasets[0].data[index] / summary.totalExpenses) * 100).toFixed(1) : 0; //stops dividing from zero and tofixed() round the numbers
+                {chartData.labels.map((label, index) => {const percentage = summary.totalExpenses > 0 ? //chartData.labels = array of categories, index = position[0]
+                ((chartData.datasets[0].data[index] / summary.totalExpenses) * 100).toFixed(1) : "0.0"; //category expenses[travelling-4000]/totalexpenses[10000] * 100 
+                                                                                  //tofixed() round the numbers & returns string
                   return (
                   <li key={label} className="flex items-center justify-between gap-10 text-sm">
                     <span className="flex items-center gap-2">
-                      <span className="inline-block h-2.5 w-2.5 rounded-full" 
-                      style={{backgroundColor:chartData.datasets[0].backgroundColor[index % chartData.datasets[0].backgroundColor.length],}}/>
+                      {/*colored dot*/}
+                      <span className="inline-block h-2.5 w-2.5 rounded-full"                                    //decide color for category
+                      style={{backgroundColor:chartData.datasets[0].backgroundColor[index % chartData.datasets[0].backgroundColor.length],}}/> 
                         <span className="text-slate-700 dark:text-slate-300">
                           {label}
                         </span>
@@ -211,6 +213,7 @@ const Dashboard = () => {
 
         {/* Recent Transactions */}
         <div className="col-span-2 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950">
+          {/*recent transaction text */}
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-semibold text-slate-900 dark:text-white">
@@ -227,6 +230,7 @@ const Dashboard = () => {
             </button>
           </div>
 
+          {/*recent transaction list*/}
           {recentTransactions.length > 0 ? (
             <ul className="mt-5 space-y-4">
               {recentTransactions.map((t) => (
@@ -238,8 +242,8 @@ const Dashboard = () => {
                           ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
                           : "bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400"
                       }`}
-                    >
-                      {t.description?.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase()}
+                    > 
+                      {t.description?.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase()} 
                     </span>
                     <div>
                       <p className="text-sm font-medium text-slate-900 dark:text-white">

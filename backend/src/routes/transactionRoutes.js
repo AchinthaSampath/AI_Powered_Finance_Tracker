@@ -10,9 +10,9 @@ import {
 
 const router = express.Router();
 
-router.post("/transaction", addTransaction);// income,expense decides at the frontend
-router.get("/transaction", getAllTransactions);
-router.delete("/transaction/:id", removeTransaction);
+router.post("/transactions", addTransaction);// income,expense decides at the frontend
+router.get("/transactions", getAllTransactions);
+router.delete("/transactions/:id", removeTransaction);
 router.get("/summary", getTotal);
 router.post("/upload", upload.single('statement'), uploadStatement);
 
