@@ -64,7 +64,6 @@ const Dashboard = () => {
   const recentTransactions = [...transactions] //... copy of the transaction array, sort from recent
     .sort((a, b) => new Date(b.date) - new Date(a.date)) 
     .slice(0, 5);
-
   if (loading)
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">

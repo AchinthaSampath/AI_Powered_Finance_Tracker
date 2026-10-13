@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Add from "./pages/Add";
 import Transactions from "./pages/Transactions";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
+import SideBar from "./components/SideBar";
 
 
 const AppContent = () => {
@@ -11,12 +12,15 @@ const AppContent = () => {
     return (
     <div className={theme ? "dark" : ""}>
     <BrowserRouter>
+      <SideBar />
+      <div className="ml-64">
       <Navbar />
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/add" element={<Add />} />
         <Route path="/transactions" element={<Transactions />} />
       </Routes>
+      </div>
     </BrowserRouter>
     </div>
   );
