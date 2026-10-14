@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { getSummary, getTransactions } from "../services/transactionService";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import FileUpload from "../components/FileUpload";
 import { Wallet, ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -271,7 +270,6 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-      <FileUpload />
     </main>
   );
 };

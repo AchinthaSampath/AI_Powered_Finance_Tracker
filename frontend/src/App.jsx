@@ -5,6 +5,7 @@ import Add from "./pages/Add";
 import Transactions from "./pages/Transactions";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import SideBar from "./components/SideBar";
+import FileUpload from "./components/FileUpload";
 
 
 const AppContent = () => {
@@ -13,7 +14,7 @@ const AppContent = () => {
     <div className={theme ? "dark" : ""}>
     <BrowserRouter>
       <SideBar />
-      <div className="ml-64">
+      <div className="ml-64 min-h-screen bg-slate-50 dark:bg-slate-900">
       <Navbar />
       <Routes>
         <Route path="/" element={<Dashboard />} />

@@ -13,13 +13,9 @@ const Navbar = () => {
     }`;
   const {setTheme} = useTheme();
   return (
-    <nav className="bg-white dark:bg-zinc-800 border-b border-stone-200 px-8 py-4">
+    <nav className="bg-white dark:bg-zinc-800 border-stone-200 px-8 py-4">
       <div className="max-w-5xl mx-auto flex items-center justify-between">
         <div className="flex items-center justify-between gap-3">
-          {/* Logo / App Name */}
-          <h1 className="text-lg font-bold text-stone-800 dark:text-slate-300 tracking-tight">
-            Finance Tracker
-          </h1>
           <div className="bg-zinc-100 dark:bg-zinc-700 p-2 rounded-xl">
             <button
             onClick={()=> {
@@ -40,14 +36,8 @@ const Navbar = () => {
 
         {/* Links */}
         <div className="flex items-center gap-6">
-          <Link to="/" className={linkClass("/")}>
-            Dashboard
-          </Link>
           <Link to="/add" className={linkClass("/add")}>
             Add
-          </Link>
-          <Link to="/transactions" className={linkClass("/transactions")}>
-            Transactions
           </Link>
         </div>
       </div>

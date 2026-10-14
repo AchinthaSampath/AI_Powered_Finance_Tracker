@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import FileUpload from "./FileUpload";
+
 const SideBar = () => {
   const location = useLocation();
+  const [showImport, setShowImport] = useState(false);
 
   const linkClass = (path) =>
     `text-sm font-medium transition ${
@@ -10,9 +14,9 @@ const SideBar = () => {
     }`;
 
   return (
-    <aside className="fixed top-0 left-0 z-50 h-screen w-64 border-r border-stone-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 shadow-sm">
-      <nav className="flex h-full flex-col px-4 py-6">
-          {/* Links */}
+    <>
+      <aside className="fixed top-0 left-0 z-50 h-screen w-64 border-r border-stone-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 shadow-sm">
+        <nav className="flex h-full flex-col px-4 py-6">
           <div className="flex flex-col gap-1">
             <Link to="/" className={linkClass("/")}>
               Dashboard
@@ -23,9 +27,19 @@ const SideBar = () => {
             <Link to="/add" className={linkClass("/add")}>
               Add
             </Link>
+
+            <button
+              onClick={() => setShowImport(true)}
+              className="text-left text-sm font-medium text-stone-400 transition hover:text-stone-700"
+            >
+              Import statement
+            </button>
           </div>
-      </nav>
-    </aside>
+        </nav>
+      </aside>
+
+      {showImport && <FileUpload onClose={() => setShowImport(false)} />}
+    </>
   );
 };
 
