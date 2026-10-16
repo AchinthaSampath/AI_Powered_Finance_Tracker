@@ -23,9 +23,7 @@ const SideBar = () => {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500 text-white">
               <Wallet size={20} />
             </div>
-            <span className="text-lg font-semibold text-slate-900 dark:text-white">
-              ClearMoney
-            </span>
+            <span className="text-lg font-semibold text-slate-900 dark:text-white">ClearMoney</span>
           </div>
 
           {/* Links */}
@@ -34,10 +32,7 @@ const SideBar = () => {
               <Home size={20} /> Overview
             </Link>
 
-            <Link
-              to="/transactions"
-              className={itemClass(location.pathname === "/transactions")}
-            >
+            <Link to="/transactions" className={itemClass(location.pathname === "/transactions")}>
               <BarChart3 size={20} /> Transactions
             </Link>
 
