@@ -11,24 +11,26 @@ const Navbar = () => {
         ? "text-stone-900 dark:text-slate-300"
         : "text-stone-400 hover:text-stone-700"
     }`;
-  const {setTheme} = useTheme();
+  const { setTheme } = useTheme();
   return (
-    <nav className="bg-white dark:bg-zinc-800 border-stone-200 px-8 py-4">
-      <div className="max-w-5xl mx-auto flex items-center justify-between">
+    <nav className="border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 px-8 py-4">
+      <div className="mx-auto flex items-center justify-end">
         <div className="flex items-center justify-between gap-3">
           <div className="bg-zinc-100 dark:bg-zinc-700 p-2 rounded-xl">
             <button
-            onClick={()=> {
-              setTheme("");
-            }}
-            className="bg-transparent p-3 hover:bg-zinc-200 dark:hover:bg-zinc-100/10 rounded-lg text-black dark:text-white">
+              onClick={() => {
+                setTheme("");
+              }}
+              className="bg-transparent p-3 hover:bg-zinc-200 dark:hover:bg-zinc-100/10 rounded-lg text-black dark:text-white"
+            >
               <Sun />
             </button>
-            <button 
-             onClick={()=> {
-              setTheme("dark");
-            }}
-            className="bg-transparent p-3 hover:bg-zinc-200 dark:hover:bg-zinc-100/10 rounded-lg text-black dark:text-white">
+            <button
+              onClick={() => {
+                setTheme("dark");
+              }}
+              className="bg-transparent p-3 hover:bg-zinc-200 dark:hover:bg-zinc-100/10 rounded-lg text-black dark:text-white"
+            >
               <Moon />
             </button>
           </div>

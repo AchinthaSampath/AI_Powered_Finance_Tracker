@@ -48,25 +48,18 @@ const FileUpload = ({ onClose }) => {
           Bring in your bank statement
         </h4>
         <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-          Upload a CSV and ClearMoney will identify, categorize, and organize
-          each transaction for you.
+          Upload a CSV and ClearMoney will identify, categorize, and organize each transaction for
+          you.
         </p>
 
         {/* Button 1: choose the file */}
         <label className="mt-6 flex cursor-pointer flex-col items-center gap-2 rounded-2xl border border-dashed border-indigo-300 bg-indigo-50 py-10 dark:border-indigo-400/40 dark:bg-indigo-950/50">
-          <input
-            type="file"
-            accept=".csv"
-            className="hidden"
-            onChange={handleFileChange}
-          />
+          <input type="file" accept=".csv" className="hidden" onChange={handleFileChange} />
           <FileSpreadsheet className="text-indigo-500" />
           <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-300">
             {file ? file.name : "Choose a CSV file"}
           </span>
-          <span className="text-xs text-slate-400">
-            click to browse · CSV up to 10 MB
-          </span>
+          <span className="text-xs text-slate-400">click to browse · CSV up to 10 MB</span>
         </label>
 
         {/* Selected file row */}

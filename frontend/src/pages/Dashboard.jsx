@@ -38,37 +38,31 @@ const Dashboard = () => {
   const expensesByCategory = transactions
     .filter((t) => t.type === "expense")
     .reduce((acc, t) => {
-      acc[t.category] = (acc[t.category] || 0) + t.amount; {/*acc = running object of categorized totals t = current transaction being processed Returns a single object: { Food: 50, Transport: 30 }*/}
+      acc[t.category] = (acc[t.category] || 0) + t.amount;
+      {
+        /*acc = running object of categorized totals t = current transaction being processed Returns a single object: { Food: 50, Transport: 30 }*/
+      }
       return acc;
-    }, {}); 
+    }, {});
 
   const chartData = {
     labels: Object.keys(expensesByCategory), //[Food,Travelling]
     datasets: [
       {
-        data: Object.values(expensesByCategory),//[rs 3000, rs 5000]
-        backgroundColor: [
-          "#f87171",
-          "#fb923c",
-          "#facc15",
-          "#34d399",
-          "#60a5fa",
-          "#a78bfa",
-        ],
+        data: Object.values(expensesByCategory), //[rs 3000, rs 5000]
+        backgroundColor: ["#f87171", "#fb923c", "#facc15", "#34d399", "#60a5fa", "#a78bfa"],
         borderWidth: 0,
       },
     ],
   };
 
   const recentTransactions = [...transactions] //... copy of the transaction array, sort from recent
-    .sort((a, b) => new Date(b.date) - new Date(a.date)) 
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);
   if (loading)
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <p className="text-stone-400 text-sm tracking-widest uppercase">
-          Loading...
-        </p>
+        <p className="text-stone-400 text-sm tracking-widest uppercase">Loading...</p>
       </div>
     );
 
@@ -147,63 +141,87 @@ const Dashboard = () => {
 
       {/* Chart + Recent Transactions */}
       <div className="mt-5 grid grid-cols-5 gap-5">
-
         {/* Chart */}
         <div className="col-span-3 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950">
-          
           {/*spendin overview text */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-slate-900 dark:text-white">
-                Spending overview
-              </h2>
+              <h2 className="font-semibold text-slate-900 dark:text-white">Spending overview</h2>
               <p className="text-sm text-slate-400">Where your money went</p>
             </div>
           </div>
 
           {/*Doghnut Chart + Category List*/}
-          {Object.keys(expensesByCategory).length > 0 ? ( //check for categories [food,travel] > 0 
+          {Object.keys(expensesByCategory).length > 0 ? ( //check for categories [food,travel] > 0
             <div className="mt-4 flex items-center gap-8">
-
               {/*Doghnut*/}
-              <div style={{ width: "220px", minWidth: "220px" }} className="relative flex items-center justify-center">
-                <Doughnut data={chartData} options={{cutout: "80%", // Sets thickness
-                          plugins: {legend: {display: false, // Hides the legend boxes entirely
-                          },},}}/>
+              <div
+                style={{ width: "220px", minWidth: "220px" }}
+                className="relative flex items-center justify-center"
+              >
+                <Doughnut
+                  data={chartData}
+                  options={{
+                    cutout: "80%", // Sets thickness
+                    plugins: {
+                      legend: {
+                        display: false, // Hides the legend boxes entirely
+                      },
+                    },
+                  }}
+                />
 
                 {/* Inside Doghnut */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                   <span className="text-2xl font-bold text-stone-800 dark:text-white">
-                    Rs.{(summary.totalExpenses / 1000).toLocaleString(undefined, {minimumFractionDigits: 1,maximumFractionDigits: 1,})}{" "}K
+                    Rs.
+                    {(summary.totalExpenses / 1000).toLocaleString(undefined, {
+                      minimumFractionDigits: 1,
+                      maximumFractionDigits: 1,
+                    })}{" "}
+                    K
                   </span>
                   <span className="text-xs text-slate-400">Total spent</span>
                 </div>
               </div>
 
               {/* Category list */}
-              <ul className="flex-1 space-y-3"> 
-                {chartData.labels.map((label, index) => {const percentage = summary.totalExpenses > 0 ? //chartData.labels = array of categories, index = position[0]
-                ((chartData.datasets[0].data[index] / summary.totalExpenses) * 100).toFixed(1) : "0.0"; //category expenses[travelling-4000]/totalexpenses[10000] * 100 
-                                                                                  //tofixed() round the numbers & returns string
+              <ul className="flex-1 space-y-3">
+                {chartData.labels.map((label, index) => {
+                  const percentage =
+                    summary.totalExpenses > 0 //chartData.labels = array of categories, index = position[0]
+                      ? ((chartData.datasets[0].data[index] / summary.totalExpenses) * 100).toFixed(
+                          1,
+                        )
+                      : "0.0"; //category expenses[travelling-4000]/totalexpenses[10000] * 100
+                  //tofixed() round the numbers & returns string
                   return (
-                  <li key={label} className="flex items-center justify-between gap-10 text-sm">
-                    <span className="flex items-center gap-2">
-                      {/*colored dot*/}
-                      <span className="inline-block h-2.5 w-2.5 rounded-full"                                    //decide color for category
-                      style={{backgroundColor:chartData.datasets[0].backgroundColor[index % chartData.datasets[0].backgroundColor.length],}}/> 
-                        <span className="text-slate-700 dark:text-slate-300">
-                          {label}
-                        </span>
+                    <li key={label} className="flex items-center justify-between gap-10 text-sm">
+                      <span className="flex items-center gap-2">
+                        {/*colored dot*/}
+                        <span
+                          className="inline-block h-2.5 w-2.5 rounded-full" //decide color for category
+                          style={{
+                            backgroundColor:
+                              chartData.datasets[0].backgroundColor[
+                                index % chartData.datasets[0].backgroundColor.length
+                              ],
+                          }}
+                        />
+                        <span className="text-slate-700 dark:text-slate-300">{label}</span>
                       </span>
 
                       <span className="font-medium text-slate-500 dark:text-slate-400">
                         {percentage}%
                       </span>
-                    </li>);})}
-               </ul>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
-          ) : ( // category.length < 0
-            <div className="flex items-center justify-center h-40">   
+          ) : (
+            // category.length < 0
+            <div className="flex items-center justify-center h-40">
               <p className="text-stone-300 text-sm">No expense data yet</p>
             </div>
           )}
@@ -214,12 +232,8 @@ const Dashboard = () => {
           {/*recent transaction text */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-slate-900 dark:text-white">
-                Recent transactions
-              </h2>
-              <p className="text-sm text-slate-400">
-                Your latest money activity
-              </p>
+              <h2 className="font-semibold text-slate-900 dark:text-white">Recent transactions</h2>
+              <p className="text-sm text-slate-400">Your latest money activity</p>
             </div>
             <button className="flex items-center gap-1 text-sm font-medium text-indigo-600 dark:text-indigo-400">
               <Link to="/transactions" className={"/transactions"}>
@@ -240,16 +254,20 @@ const Dashboard = () => {
                           ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
                           : "bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400"
                       }`}
-                    > 
-                      {t.description?.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase()} 
+                    >
+                      {t.description
+                        ?.split(" ")
+                        .slice(0, 2)
+                        .map((w) => w[0])
+                        .join("")
+                        .toUpperCase()}
                     </span>
                     <div>
                       <p className="text-sm font-medium text-slate-900 dark:text-white">
                         {t.description}
                       </p>
                       <p className="text-xs text-slate-400">
-                        {t.category} ·{" "}
-                        {new Date(t.date).toLocaleDateString("en-GB")}
+                        {t.category} · {new Date(t.date).toLocaleDateString("en-GB")}
                       </p>
                     </div>
                   </div>
@@ -257,8 +275,7 @@ const Dashboard = () => {
                   <span
                     className={`text-sm font-semibold ${t.type === "income" ? "text-emerald-600 dark:text-emerald-400" : "text-rose-500"}`}
                   >
-                    {t.type === "income" ? "+" : "-"} Rs.{" "}
-                    {t.amount.toLocaleString()}
+                    {t.type === "income" ? "+" : "-"} Rs. {t.amount.toLocaleString()}
                   </span>
                 </li>
               ))}

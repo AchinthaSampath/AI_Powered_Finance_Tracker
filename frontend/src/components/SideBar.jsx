@@ -1,39 +1,53 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Wallet, Home, BarChart3, Upload, Plus } from "lucide-react";
 import FileUpload from "./FileUpload";
 
 const SideBar = () => {
   const location = useLocation();
   const [showImport, setShowImport] = useState(false);
 
-  const linkClass = (path) =>
-    `text-sm font-medium transition ${
-      location.pathname === path
-        ? "text-stone-900 dark:text-slate-300"
-        : "text-stone-400 hover:text-stone-700"
+  const itemClass = (active) =>
+    `flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition ${
+      active
+        ? "bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400"
+        : "text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-700/50 dark:hover:text-slate-200"
     }`;
 
   return (
     <>
-      <aside className="fixed top-0 left-0 z-50 h-screen w-64 border-r border-stone-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 shadow-sm">
+      <aside className="fixed top-0 left-0 z-50 h-screen w-64 border-r border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800">
         <nav className="flex h-full flex-col px-4 py-6">
-          <div className="flex flex-col gap-1">
-            <Link to="/" className={linkClass("/")}>
-              Dashboard
-            </Link>
-            <Link to="/transactions" className={linkClass("/transactions")}>
-              Transactions
-            </Link>
-            <Link to="/add" className={linkClass("/add")}>
-              Add
+          {/* Logo */}
+          <div className="mb-8 flex items-center gap-3 px-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500 text-white">
+              <Wallet size={20} />
+            </div>
+            <span className="text-lg font-semibold text-slate-900 dark:text-white">
+              ClearMoney
+            </span>
+          </div>
+
+          {/* Links */}
+          <div className="flex flex-col gap-2">
+            <Link to="/" className={itemClass(location.pathname === "/")}>
+              <Home size={20} /> Overview
             </Link>
 
-            <button
-              onClick={() => setShowImport(true)}
-              className="text-left text-sm font-medium text-stone-400 transition hover:text-stone-700"
+            <Link
+              to="/transactions"
+              className={itemClass(location.pathname === "/transactions")}
             >
-              Import statement
+              <BarChart3 size={20} /> Transactions
+            </Link>
+
+            <button onClick={() => setShowImport(true)} className={itemClass(false)}>
+              <Upload size={20} /> Import statement
             </button>
+
+            <Link to="/add" className={itemClass(location.pathname === "/add")}>
+              <Plus size={20} /> Add transaction
+            </Link>
           </div>
         </nav>
       </aside>

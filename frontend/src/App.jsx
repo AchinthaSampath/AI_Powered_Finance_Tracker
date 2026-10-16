@@ -5,27 +5,25 @@ import Add from "./pages/Add";
 import Transactions from "./pages/Transactions";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import SideBar from "./components/SideBar";
-import FileUpload from "./components/FileUpload";
-
 
 const AppContent = () => {
-    const { theme } = useTheme();
-    return (
+  const { theme } = useTheme();
+  return (
     <div className={theme ? "dark" : ""}>
-    <BrowserRouter>
-      <SideBar />
-      <div className="ml-64 min-h-screen bg-slate-50 dark:bg-slate-900">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/add" element={<Add />} />
-        <Route path="/transactions" element={<Transactions />} />
-      </Routes>
-      </div>
-    </BrowserRouter>
+      <BrowserRouter>
+        <SideBar />
+        <div className="ml-64 min-h-screen bg-slate-50 dark:bg-slate-900">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/add" element={<Add />} />
+            <Route path="/transactions" element={<Transactions />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 const App = () => {
   return (

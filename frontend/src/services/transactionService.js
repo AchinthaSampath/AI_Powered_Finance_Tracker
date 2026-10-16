@@ -29,8 +29,8 @@ export const getSummary = async () => {
 };
 
 export const fileUpload = async (formData) => {
-  const response = await API.post('/upload', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
+  const response = await API.post("/upload", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
   });
   return response.data;
 };

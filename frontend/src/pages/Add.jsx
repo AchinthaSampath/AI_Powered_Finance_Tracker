@@ -46,9 +46,7 @@ const Add = () => {
           <h1 className="text-2xl font-bold text-stone-800 tracking-tight dark:text-slate-300">
             Add Transaction
           </h1>
-          <p className="text-stone-400 text-sm mt-0.5">
-            Record a new income or expense
-          </p>
+          <p className="text-stone-400 text-sm mt-0.5">Record a new income or expense</p>
         </div>
       </div>
 
@@ -59,11 +57,7 @@ const Add = () => {
               {/* Type */}
               <div>
                 <label className={labelClass}>Type</label>
-                <select
-                  value={type}
-                  onChange={handleTypeChange}
-                  className={inputClass}
-                >
+                <select value={type} onChange={handleTypeChange} className={inputClass}>
                   <option value="">Select type</option>
                   <option value="income">Income</option>
                   <option value="expense">Expense</option>
@@ -120,8 +114,7 @@ const Add = () => {
               {/* Description */}
               <div>
                 <label className={labelClass}>
-                  Description{" "}
-                  <span className="normal-case text-stone-300">(optional)</span>
+                  Description <span className="normal-case text-stone-300">(optional)</span>
                 </label>
                 <input
                   type="text"
