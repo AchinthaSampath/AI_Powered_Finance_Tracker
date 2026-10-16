@@ -12,7 +12,7 @@ const AppContent = () => {
     <div className={theme ? "dark" : ""}>
       <BrowserRouter>
         <SideBar />
-        <div className="ml-64 min-h-screen bg-slate-50 dark:bg-slate-900">
+        <div className="md:ml-64 min-h-screen bg-slate-50 dark:bg-slate-900">
           <Navbar />
           <Routes>
             <Route path="/" element={<Dashboard />} />

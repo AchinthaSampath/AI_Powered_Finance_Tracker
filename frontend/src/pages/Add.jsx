@@ -45,7 +45,7 @@ const Add = () => {
       : ["Salary", "Freelance", "Business", "Other"];
 
   return (
-    <main className="px-8 py-8">
+    <main className="mx-auto max-w-lg px-4 py-6 md:py-8">
       {/* Header */}
       <p className="text-xs font-semibold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
         Keep your records current
@@ -58,7 +58,7 @@ const Add = () => {
       </p>
 
       {/* Form card */}
-      <div className="mt-6 max-w-lg rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-950">
+      <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950 sm:p-8">
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className={labelClass}>Type</label>
@@ -98,8 +98,7 @@ const Add = () => {
 
           <div>
             <label className={labelClass}>
-              Description{" "}
-              <span className="font-normal normal-case text-slate-400">(optional)</span>
+              Description <span className="font-normal normal-case text-slate-400">(optional)</span>
             </label>
             <input
               type="text"

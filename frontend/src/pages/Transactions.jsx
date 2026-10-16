@@ -38,7 +38,7 @@ const Transactions = () => {
   if (error) return <p className="p-8 text-sm text-red-400">Error: {error}</p>;
 
   const filtered = transactions.filter((t) =>
-    `${t.description || ""} ${t.category}`.toLowerCase().includes(search.toLowerCase())
+    `${t.description || ""} ${t.category}`.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -47,9 +47,7 @@ const Transactions = () => {
       <p className="text-xs font-semibold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
         Your money history
       </p>
-      <h1 className="mt-1 text-3xl font-semibold text-slate-900 dark:text-white">
-        Transactions
-      </h1>
+      <h1 className="mt-1 text-3xl font-semibold text-slate-900 dark:text-white">Transactions</h1>
       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
         {transactions.length} transactions in your account
       </p>
@@ -59,10 +57,7 @@ const Transactions = () => {
         {/* Search */}
         <div className="p-4">
           <div className="relative w-72">
-            <Search
-              size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-            />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="search"
               placeholder="Search transactions"
@@ -132,9 +127,7 @@ const Transactions = () => {
                 {/* Amount */}
                 <td
                   className={`px-6 py-4 text-right text-sm font-semibold ${
-                    t.type === "income"
-                      ? "text-emerald-600 dark:text-emerald-400"
-                      : "text-rose-500"
+                    t.type === "income" ? "text-emerald-600 dark:text-emerald-400" : "text-rose-500"
                   }`}
                 >
                   {t.type === "income" ? "+" : "-"} Rs. {t.amount.toLocaleString()}

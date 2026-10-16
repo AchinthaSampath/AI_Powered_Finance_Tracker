@@ -74,7 +74,7 @@ const Dashboard = () => {
     );
 
   return (
-    <main className="flex-1 overflow-y-auto bg-slate-50 px-8 py-8 dark:bg-slate-900">
+    <main className="flex-1 overflow-y-auto bg-slate-50 px-4 py-6 md:px-8 md:py-8 dark:bg-slate-900">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
@@ -96,7 +96,7 @@ const Dashboard = () => {
       </div>
 
       {/* Summary Cards */}
-      <div className="mt-6 grid grid-cols-3 gap-5">
+      <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-5">
         {/* Balance */}
         <div className="rounded-2xl bg-indigo-600 p-6 text-white">
           <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-indigo-100">
@@ -140,9 +140,9 @@ const Dashboard = () => {
       </div>
 
       {/* Chart + Recent Transactions */}
-      <div className="mt-5 grid grid-cols-5 gap-5">
+      <div className="mt-5 grid grid-cols-1 lg:grid-cols-5 gap-5">
         {/* Chart */}
-        <div className="col-span-3 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950">
+        <div className="lg:col-span-3 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950">
           {/*spendin overview text */}
           <div className="flex items-center justify-between">
             <div>
@@ -153,7 +153,7 @@ const Dashboard = () => {
 
           {/*Doghnut Chart + Category List*/}
           {Object.keys(expensesByCategory).length > 0 ? ( //check for categories [food,travel] > 0
-            <div className="mt-4 flex items-center gap-8">
+            <div className="mt-4 flex flex-col items-center gap-6 sm:flex-row sm:gap-10">
               {/*Doghnut*/}
               <div
                 style={{ width: "220px", minWidth: "220px" }}
@@ -186,7 +186,7 @@ const Dashboard = () => {
               </div>
 
               {/* Category list */}
-              <ul className="flex-1 space-y-3">
+              <ul className="w-full max-w-xs space-y-3">
                 {chartData.labels.map((label, index) => {
                   const percentage =
                     summary.totalExpenses > 0 //chartData.labels = array of categories, index = position[0]
@@ -196,7 +196,7 @@ const Dashboard = () => {
                       : "0.0"; //category expenses[travelling-4000]/totalexpenses[10000] * 100
                   //tofixed() round the numbers & returns string
                   return (
-                    <li key={label} className="flex items-center justify-between gap-10 text-sm">
+                    <li key={label} className="flex items-center justify-between text-sm">
                       <span className="flex items-center gap-2">
                         {/*colored dot*/}
                         <span
@@ -228,7 +228,7 @@ const Dashboard = () => {
         </div>
 
         {/* Recent Transactions */}
-        <div className="col-span-2 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950">
+        <div className="lg:col-span-2 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950">
           {/*recent transaction text */}
           <div className="flex items-center justify-between">
             <div>

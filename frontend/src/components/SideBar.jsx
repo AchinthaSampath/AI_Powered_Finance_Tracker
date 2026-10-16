@@ -16,12 +16,12 @@ const SideBar = () => {
 
   return (
     <>
-      <aside className="fixed top-0 left-0 z-50 h-screen w-64 border-r border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800">
+      <aside className="fixed top-0 left-0 z-50 h-screen w-64 border-r border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 hidden md:block">
         <nav className="flex h-full flex-col px-4 py-6">
           {/* Logo */}
           <div className="mb-8 flex items-center gap-3 px-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500 text-white">
-              <Wallet size={20} />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-500">
+              <Wallet size={20} className="text-white" />
             </div>
             <span className="text-lg font-semibold text-slate-900 dark:text-white">ClearMoney</span>
           </div>
