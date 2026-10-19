@@ -14,11 +14,13 @@ const AppContent = () => {
         <SideBar />
         <div className="md:ml-64 min-h-screen bg-slate-50 dark:bg-slate-900">
           <Navbar />
+          <div className="mx-auto w-full max-w-7xl px-4 py-6 md:px-8 md:py-8">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/add" element={<Add />} />
             <Route path="/transactions" element={<Transactions />} />
           </Routes>
+          </div>
         </div>
       </BrowserRouter>
     </div>

@@ -50,7 +50,14 @@ const Dashboard = () => {
     datasets: [
       {
         data: Object.values(expensesByCategory), //[rs 3000, rs 5000]
-        backgroundColor: ["#f87171", "#fb923c", "#facc15", "#34d399", "#60a5fa", "#a78bfa"],
+        backgroundColor: [
+          "#f87171",
+          "#fb923c",
+          "#facc15",
+          "#34d399",
+          "#60a5fa",
+          "#a78bfa",
+        ],
         borderWidth: 0,
       },
     ],
@@ -62,7 +69,9 @@ const Dashboard = () => {
   if (loading)
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <p className="text-stone-400 text-sm tracking-widest uppercase">Loading...</p>
+        <p className="text-stone-400 text-sm tracking-widest uppercase">
+          Loading...
+        </p>
       </div>
     );
 
@@ -146,7 +155,9 @@ const Dashboard = () => {
           {/*spendin overview text */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-slate-900 dark:text-white">Spending overview</h2>
+              <h2 className="font-semibold text-slate-900 dark:text-white">
+                Spending overview
+              </h2>
               <p className="text-sm text-slate-400">Where your money went</p>
             </div>
           </div>
@@ -190,13 +201,18 @@ const Dashboard = () => {
                 {chartData.labels.map((label, index) => {
                   const percentage =
                     summary.totalExpenses > 0 //chartData.labels = array of categories, index = position[0]
-                      ? ((chartData.datasets[0].data[index] / summary.totalExpenses) * 100).toFixed(
-                          1,
-                        )
+                      ? (
+                          (chartData.datasets[0].data[index] /
+                            summary.totalExpenses) *
+                          100
+                        ).toFixed(1)
                       : "0.0"; //category expenses[travelling-4000]/totalexpenses[10000] * 100
                   //tofixed() round the numbers & returns string
                   return (
-                    <li key={label} className="flex items-center justify-between text-sm">
+                    <li
+                      key={label}
+                      className="flex items-center justify-between text-sm"
+                    >
                       <span className="flex items-center gap-2">
                         {/*colored dot*/}
                         <span
@@ -204,11 +220,14 @@ const Dashboard = () => {
                           style={{
                             backgroundColor:
                               chartData.datasets[0].backgroundColor[
-                                index % chartData.datasets[0].backgroundColor.length
+                                index %
+                                  chartData.datasets[0].backgroundColor.length
                               ],
                           }}
                         />
-                        <span className="text-slate-700 dark:text-slate-300">{label}</span>
+                        <span className="text-slate-700 dark:text-slate-300">
+                          {label}
+                        </span>
                       </span>
 
                       <span className="font-medium text-slate-500 dark:text-slate-400">
@@ -232,14 +251,19 @@ const Dashboard = () => {
           {/*recent transaction text */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-slate-900 dark:text-white">Recent transactions</h2>
-              <p className="text-sm text-slate-400">Your latest money activity</p>
+              <h2 className="font-semibold text-slate-900 dark:text-white">
+                Recent transactions
+              </h2>
+              <p className="text-sm text-slate-400">
+                Your latest money activity
+              </p>
             </div>
-            <button className="flex items-center gap-1 text-sm font-medium text-indigo-600 dark:text-indigo-400">
-              <Link to="/transactions" className={"/transactions"}>
-                View all <ArrowUpRight className="h-3.5 w-3.5" />
-              </Link>
-            </button>
+            <Link
+              to="/transactions"
+              className="flex shrink-0 items-center gap-1 whitespace-nowrap text-sm font-medium text-indigo-600 dark:text-indigo-400"
+            >
+              View all <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
 
           {/*recent transaction list*/}
@@ -267,7 +291,8 @@ const Dashboard = () => {
                         {t.description}
                       </p>
                       <p className="text-xs text-slate-400">
-                        {t.category} · {new Date(t.date).toLocaleDateString("en-GB")}
+                        {t.category} ·{" "}
+                        {new Date(t.date).toLocaleDateString("en-GB")}
                       </p>
                     </div>
                   </div>
@@ -275,7 +300,8 @@ const Dashboard = () => {
                   <span
                     className={`text-sm font-semibold ${t.type === "income" ? "text-emerald-600 dark:text-emerald-400" : "text-rose-500"}`}
                   >
-                    {t.type === "income" ? "+" : "-"} Rs. {t.amount.toLocaleString()}
+                    {t.type === "income" ? "+" : "-"} Rs.{" "}
+                    {t.amount.toLocaleString()}
                   </span>
                 </li>
               ))}
