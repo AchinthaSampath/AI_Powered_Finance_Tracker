@@ -1,5 +1,7 @@
 import { Transaction } from "../models/transactions.js";
 import { categorizeTransactions } from "../services/geminiService.js";
+
+// Every query now includes user: req.user.userId, so a transaction is only found if it belongs to the logged-in person
 //add expenses
 export const addTransaction = async (req, res) => {
   try {
@@ -16,6 +18,7 @@ export const addTransaction = async (req, res) => {
       category,
       description,
       date,
+      user: req.user.userId,
     });
     await transactions.save();
     res.status(201).json(transactions);
@@ -27,7 +30,7 @@ export const addTransaction = async (req, res) => {
 // GET All Transactions
 export const getAllTransactions = async (req, res) => {
   try {
-    const transactions = await Transaction.find().sort({ createdAt: -1 });
+    const transactions = await Transaction.find({ user: req.user.userId }).sort({ createdAt: -1 });
     res.status(200).json(transactions);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
@@ -37,7 +40,7 @@ export const getAllTransactions = async (req, res) => {
 // Delete A Transaction
 export const removeTransaction = async (req, res) => {
   try {
-    const transactions = await Transaction.findByIdAndDelete(req.params.id);
+    const transactions = await Transaction.findOneAndDelete({ _id: req.params.id, user: req.user.userId,});
 
     if (!transactions) {
       return res.status(404).json({ message: "Not found" });
@@ -53,7 +56,7 @@ export const removeTransaction = async (req, res) => {
 
 export const getTotal = async (req, res) => {
   try {
-    const transactions = await Transaction.find();
+    const transactions = await Transaction.find({ user: req.user.userId });
 
     const totalIncome = transactions
       .filter((t) => t.type === "income")
@@ -73,18 +76,20 @@ export const getTotal = async (req, res) => {
 
 export const uploadStatement = async (req, res) => {
   try {
-    console.log('1 - file received:', req.file?.originalname);
-    const csvString = req.file.buffer.toString('utf-8');//Converts raw bytes in memory into a readable Js string
-    console.log('2 - csv string length:', csvString.length);
-    const transactions = await categorizeTransactions(csvString); // categorize from gemini API
-    console.log('3 - transactions from gemini:', transactions);
-    await Transaction.insertMany(transactions); // insert categorized transactions to the db
-    console.log('4 - inserted successfully');
-    res.json({message: 'Transaction imported', count: transactions.length});
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const csvString = req.file.buffer.toString("utf-8");
+    const transactions = await categorizeTransactions(csvString); // Gemini: no user involved
+
+    // stamp every transaction with the logged-in user's id
+    const docs = transactions.map((t) => ({ ...t, user: req.user.userId }));
+    await Transaction.insertMany(docs);
+
+    res.json({ message: "Transaction imported", count: docs.length });
   } catch (error) {
-    console.error('ERROR:', error.message);
-    res.status(500).json({message: error.message});
+    console.error("ERROR:", error.message);
+    res.status(500).json({ message: error.message });
   }
-
-
-}
+};
