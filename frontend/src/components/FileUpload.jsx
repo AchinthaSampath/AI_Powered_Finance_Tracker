@@ -18,7 +18,7 @@ const FileUpload = ({ onClose }) => {
     try {
       await fileUpload(formData);
       onClose();
-      navigate("/transactions");
+      void navigate("/transactions");
     } catch (error) {
       console.error(error);
     }

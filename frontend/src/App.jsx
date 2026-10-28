@@ -1,38 +1,45 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import Add from "./pages/Add";
 import Transactions from "./pages/Transactions";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AppLayout from "./components/AppLayout";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
-import SideBar from "./components/SideBar";
+import { AuthProvider } from "./context/AuthContext";
 
 const AppContent = () => {
   const { theme } = useTheme();
   return (
     <div className={theme ? "dark" : ""}>
       <BrowserRouter>
-        <SideBar />
-        <div className="md:ml-64 min-h-screen bg-slate-50 dark:bg-slate-900">
-          <Navbar />
-          <div className="mx-auto w-full max-w-7xl px-4 py-6 md:px-8 md:py-8">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/add" element={<Add />} />
-            <Route path="/transactions" element={<Transactions />} />
-          </Routes>
-          </div>
-        </div>
+        <Routes>
+          {/* public: no sidebar or navbar */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+
+          {/* gate: must be logged in */}
+          <Route element={<ProtectedRoute />}>
+            {/* shell: sidebar + navbar + bottom bar around the page */}
+            <Route element={<AppLayout />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/add" element={<Add />} />
+              <Route path="/transactions" element={<Transactions />} />
+            </Route>
+          </Route>
+        </Routes>
       </BrowserRouter>
     </div>
   );
 };
 
-const App = () => {
-  return (
-    <ThemeProvider>
+const App = () => (
+  <ThemeProvider>
+    <AuthProvider>
       <AppContent />
-    </ThemeProvider>
-  );
-};
+    </AuthProvider>
+  </ThemeProvider>
+);
 
 export default App;

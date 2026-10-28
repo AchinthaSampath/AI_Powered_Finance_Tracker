@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
-import { Plus, Sun, Moon } from "lucide-react";
+import { Plus, Sun, Moon, Wallet, LogOut } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
+  const { logout } = useAuth();
 
   const month = new Date().toLocaleDateString("en-US", {
     month: "short",
@@ -30,6 +32,13 @@ const Navbar = () => {
         >
           <Plus size={16} /> Add transaction
         </Link>
+        <button
+          onClick={logout}
+          aria-label="Log out"
+          className="rounded-xl border border-slate-200 p-2 text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700 md:hidden"
+        >
+          <LogOut size={18} />
+        </button>
       </div>
     </nav>
   );

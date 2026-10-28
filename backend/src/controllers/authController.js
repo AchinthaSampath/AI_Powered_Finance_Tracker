@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
+//create the token
 const signToken = (user) =>
   jwt.sign({ userId: user.id, username: user.username }, process.env.JWT_SECRET, {
     expiresIn: "7d",
@@ -41,7 +42,7 @@ export const register = async (req, res) => {
       password: hashedPassword,
     });
 
-    // log the user in straight away
+    // log the user in straight away , res with create token
     res.status(201).json({ token: signToken(user), user: publicUser(user) });
   } catch (error) {
     console.error("Error in register controller", error);
@@ -63,7 +64,7 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
-
+    //res with create token
     res.status(200).json({ token: signToken(user), user: publicUser(user) });
   } catch (error) {
     console.error("Error in login controller", error);

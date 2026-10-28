@@ -1,36 +1,31 @@
-import axios from "axios";
-
-const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
-});
+import api from "./api"; // the shared client: it adds the token to every request
 
 // Get all transactions
 export const getTransactions = async () => {
-  const response = await API.get("/transactions");
+  const response = await api.get("/transactions");
   return response.data;
 };
 
 // Add transaction
 export const addTransaction = async (data) => {
-  const response = await API.post("/transactions", data);
+  const response = await api.post("/transactions", data);
   return response.data;
 };
 
 // Delete transaction
 export const deleteTransaction = async (id) => {
-  const response = await API.delete(`/transactions/${id}`);
+  const response = await api.delete(`/transactions/${id}`);
   return response.data;
 };
 
 // Get summary
 export const getSummary = async () => {
-  const response = await API.get("/summary");
+  const response = await api.get("/summary");
   return response.data;
 };
 
+// Upload a CSV statement
 export const fileUpload = async (formData) => {
-  const response = await API.post("/upload", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  const response = await api.post("/upload", formData);
   return response.data;
 };

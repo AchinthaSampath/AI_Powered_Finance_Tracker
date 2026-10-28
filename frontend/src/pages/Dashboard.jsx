@@ -4,10 +4,17 @@ import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Wallet, ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+const hour = new Date().getHours();
+const greeting =
+  hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+
 const Dashboard = () => {
+  const { user } = useAuth();
+
   const [summary, setSummary] = useState({
     totalIncome: 0,
     totalExpenses: 0,
@@ -96,7 +103,7 @@ const Dashboard = () => {
             })}
           </p>
           <h1 className="mt-1 text-3xl font-semibold text-slate-900 dark:text-white">
-            Good morning, User.
+            {greeting}, {user?.username}.
           </h1>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Here's your financial snapshot for this month.
